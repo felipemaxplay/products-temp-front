@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Router } from "@angular/router";
 import { Product } from '../product.model';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-product-create',
@@ -11,21 +12,30 @@ import { Product } from '../product.model';
 export class ProductCreateComponent implements OnInit {
 
   product: Product = {
-    name: "Product Temp",
-    price: 9999.50,
-    description: "Exemplo temporario para ver se pega o chamado front-end."
+    name: "",
+    price: 0,
+    description: ""
   };
 
   constructor(private router:Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {  }
+
+  showMessage(msg: string): void {
+    
+    this.snackBar.open(msg, 'X', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    })
+  }
 
   createProduct(): void {
 
     this.productService.createProduct(this.product).subscribe(() => {
-
-      this.productService.showMessage('Produto Criado!');
+      this.showMessage('Produto Criado!');
       this.router.navigate(['/products']);
     });
   }
