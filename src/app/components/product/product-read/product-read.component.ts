@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ProductService } from '../product.service';
 export class ProductReadComponent implements OnInit {
 
   pageNumber: number = 0;
-  products!: Array<any>;
+  products!: Array<Product>;
   pageNumbers!: Array<number>;
 
   constructor(private productService: ProductService) { }
@@ -19,9 +20,9 @@ export class ProductReadComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.readProduct(this.pageNumber).subscribe(productData => {
-      this.products = productData['content'];
-      this.pageNumbers = new Array(productData['totalPages']);
+    this.productService.readPageProduct(this.pageNumber).subscribe(productData => {
+      this.products = productData.content;
+      this.pageNumbers = new Array(productData.totalPages);
       console.log(productData);
     });
   }

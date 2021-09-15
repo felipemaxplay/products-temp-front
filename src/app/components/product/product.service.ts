@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Page } from '../models/page.model';
 import { Product } from './product.model';
 
 @Injectable({
@@ -17,9 +18,9 @@ export class ProductService {
     return this.http.post<Product>(this.baseUrl, product);
   }
 
-  readProduct(pageNumber: number): Observable<any> {
+  readPageProduct(pageNumber: number): Observable<Page> {
     
-    return this.http.get(this.baseUrl + "?page=" + pageNumber);
+    return this.http.get<Page>(this.baseUrl + `?page=${pageNumber}`);
   }
 
 }
