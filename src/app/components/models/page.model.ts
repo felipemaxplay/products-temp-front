@@ -1,5 +1,5 @@
 export interface Page {
-    content: Array<any>;
+    content: [];
     pageable: Pageable;
     totalPages: number;
     totalElements: number;
