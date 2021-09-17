@@ -1,15 +1,15 @@
-export interface Page {
-    content: [];
-    pageable: Pageable;
-    totalPages: number;
-    totalElements: number;
-    last: boolean;
-    number: number;
-    size: number;
-    numberOfElements: number;
-    sort: Sort;
-    first: boolean;
-    empty: boolean;
+export class Page {
+    content!: [];
+    pageable!: Pageable;
+    totalPages!: number;
+    totalElements!: number;
+    last!: boolean;
+    number!: number;
+    size!: number;
+    numberOfElements!: number;
+    sort!: Sort;
+    first!: boolean;
+    empty!: boolean;
 }
 
 export interface Pageable {

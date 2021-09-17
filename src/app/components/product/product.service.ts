@@ -18,9 +18,12 @@ export class ProductService {
     return this.http.post<Product>(this.baseUrl, product);
   }
 
-  readPageProduct(page: number, size: number, sort: string): Observable<Page> {
+  readPageProduct(page?: number, size?: number): Observable<Page> {
     
-    return this.http.get<Page>(this.baseUrl + `?page=${page}&size=${size}&sort=${sort}`);
+    if(!page && !size) {
+      return this.http.get<Page>(this.baseUrl);
+    }
+    return this.http.get<Page>(this.baseUrl + `?page=${page}&size=${size}`);
   }
 
 }

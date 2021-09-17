@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product.model';
+import { PageEvent } from '@angular/material/paginator';
+import { map } from 'rxjs/operators';
+import { Page } from '../../models/page.model';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -9,9 +11,10 @@ import { ProductService } from '../product.service';
 })
 export class ProductReadComponent implements OnInit {
 
-  pageNumber: number = 0;
-  products!: Array<Product>;
-  pageNumbers!: Array<number>;
+  dataSource: Page = new Page;
+  pageEvent: PageEvent = new PageEvent;
+
+  displayedColumns: string[] = ["id", "name", "price", "description"]
 
   constructor(private productService: ProductService) { }
 
@@ -19,12 +22,19 @@ export class ProductReadComponent implements OnInit {
     this.getProducts();
   }
 
+  onPageChange(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+
+    this.productService.readPageProduct(page, size).pipe(
+      map((pageData: Page) => this.dataSource = pageData)
+    ).subscribe();
+  }
+
   getProducts() {
-    this.productService.readPageProduct(this.pageNumber).subscribe(productData => {
-      this.products = productData.content;
-      this.pageNumbers = new Array(productData.totalPages);
-      console.log(productData);
-    });
+    this.productService.readPageProduct().pipe(
+      map((pageData: Page) => this.dataSource = pageData)
+    ).subscribe();
   }
 
 }
