@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Page } from '../models/page.model';
 import { Product } from './product.model';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ProductService {
 
   private baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   createProduct(product: Product): Observable<Product> {
     
@@ -27,7 +28,7 @@ export class ProductService {
     return this.http.get<Page>(`${this.baseUrl}?page=${page}&size=${size}`);
   }
 
-  readById(id: number): Observable<Product> {
+  readById(id: string): Observable<Product> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<Product>(url);
   }
@@ -38,6 +39,15 @@ export class ProductService {
 
   delete(id: number): Observable<Product> {
     return this.http.delete<Product>(`${this.baseUrl}/${id}`);
+  }
+
+  showMessage(msg: string): void {
+    
+    this.snackBar.open(msg, 'X', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    })
   }
 
 }
