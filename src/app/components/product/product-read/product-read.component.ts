@@ -26,13 +26,11 @@ export class ProductReadComponent implements OnInit {
     let page = event.pageIndex;
     let size = event.pageSize;
 
-    this.productService.readPageProduct(page, size).pipe(
-      map((pageData: Page) => this.dataSource = pageData)
-    ).subscribe();
+    this.getProducts(page, size);
   }
 
-  getProducts() {
-    this.productService.readPageProduct().pipe(
+  getProducts(page?: number, size?: number) {
+    this.productService.readPageProduct(page, size).pipe(
       map((pageData: Page) => this.dataSource = pageData)
     ).subscribe();
   }
