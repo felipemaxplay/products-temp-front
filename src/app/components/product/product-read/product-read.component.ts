@@ -14,7 +14,7 @@ export class ProductReadComponent implements OnInit {
   dataSource: Page = new Page;
   pageEvent: PageEvent = new PageEvent;
 
-  displayedColumns: string[] = ["id", "name", "price", "description"]
+  displayedColumns: string[] = ["id", "name", "price", "description", "action"]
 
   constructor(private productService: ProductService) { }
 
